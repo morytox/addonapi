@@ -8,8 +8,6 @@ from . import views
 
 
 urlpatterns = patterns( '',
-    
-    
     url(r'^update/$', views.Update, name='index'),
     url(r'^$', views.AddonListView.as_view(), name='list' ),
     url(r'^(?P<pk>\d+)/$', views.AddonDetailView.as_view(), name='detail')
