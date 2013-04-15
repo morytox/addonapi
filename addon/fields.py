@@ -5,7 +5,8 @@ import json
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
 
-
+from south.modelsinspector import add_introspection_rules
+add_introspection_rules([], ["^addon\.fields\.JSONField"])
 
 class JSONField(models.TextField):
     __metaclass__ = models.SubfieldBase
