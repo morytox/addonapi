@@ -1,2 +1,5 @@
 build/
 *.pyc
+db.sqlite3
+creds.json
+.project

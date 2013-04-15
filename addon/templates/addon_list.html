@@ -1,0 +1,18 @@
+{% extends "_layouts/base.html" %}
+{% load url from future %}
+
+{% block page_title %}Addon List | {% endblock %}
+
+{% block page_content %}
+
+<h2>Addons</h2>
+
+<ul>
+	{% for addon in addon_list %}
+	<li><a href="{% addon.get_absolute_url %}">{{ addon.name }}</a></li>
+	{% empty %}
+	<li>Sorry, no addon's yet. Check back soon!</li>
+	{% endfor %}
+</ul>
+
+{% endblock %}

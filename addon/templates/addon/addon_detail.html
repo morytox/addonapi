@@ -1,0 +1,13 @@
+{% extends "_layouts/base.html" %}
+{% load url from future %}
+
+{% block page_title %}{{ addon.name }} | {% endblock %}
+
+{% block page_content %}
+
+<h2>{{ addon.name }}</h2>
+
+{{ addon.config_vars|linebreaks }}
+<p>{{ addon.date_modified }}</p>
+<p><a href="{% url 'addon:list' %}" class="btn">&larr; Add-On list</a></p>
+{% endblock %}
