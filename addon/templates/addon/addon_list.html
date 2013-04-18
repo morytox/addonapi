@@ -9,7 +9,7 @@
 
 <ul>
 	{% for addon in addon_list %}
-	<li><a href="{% url 'addon:detail' addon.pk %}">{{ addon.name }}</a></li>
+	<li><a href="{% url 'addon:detail' addon.slug %}">{{ addon.name }}</a></li>
 	{% empty %}
 	<li>Sorry, no Add-On's yet. Check back soon!</li>
 	{% endfor %}
