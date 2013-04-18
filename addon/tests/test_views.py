@@ -13,10 +13,10 @@ class AddonViewTests(TestCase):
 
     def setUp(self):
         self.user = User.objects.create(username='test')
-        self.empty_addon = self.create_post(name='INDEXDEPOT')
+        self.empty_addon = self.create_post(name='LINDEXDEPOT')
         self.filled_addon = self.create_post(
-            name='ELEPHANTSQL',
-            config_vars=self.data['ELEPHANTSQL']
+            name='LELEPHANTSQL',
+            config_vars=self.data['LELEPHANTSQL']
         )
 
     def create_post(self, name='NEW ADDON', config_vars=None):

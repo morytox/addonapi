@@ -10,7 +10,7 @@ class AddonTests(TestCase):
     def setUp(self):
         self.user = User.objects.create(username='test')
 
-    def create_addon(self, name='ELEPHANTSQL'):
+    def create_addon(self, name='LELEPHANTSQL'):
         return Addon.objects.create(
             name=name,
             config_vars=''
