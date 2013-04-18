@@ -1,3 +1,4 @@
+import dj_database_url
 import os
 import json
 # Django settings for addonapi project.
