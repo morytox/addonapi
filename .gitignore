@@ -3,3 +3,5 @@ build/
 db.sqlite3
 creds.json
 .project
+notes.py
+.coverage
