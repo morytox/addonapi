@@ -17,7 +17,8 @@ ADMINS = (
 
 MANAGERS = ADMINS
 cred_file = open(os.environ["CRED_FILE"])
-cred_info = json.load(cred_file)
+conf_creds = json.load(cred_file)
+cred_info = conf_creds['CONFIG']
 # Postgres Configuration
 api = 'https://api.cloudcontrol.com'
 app = cred_info["ADDON_APP"]
