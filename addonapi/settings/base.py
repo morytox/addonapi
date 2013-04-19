@@ -16,14 +16,15 @@ ADMINS = (
 )
 
 MANAGERS = ADMINS
-
+cred_file = open(os.environ["CRED_FILE"])
+cred_info = json.load(cred_file)
 # Postgres Configuration
 api = 'https://api.cloudcontrol.com'
-app = os.environ["ADDON_APP"]
-dep = os.environ["ADDON_DEP"]
+app = cred_info["ADDON_APP"]
+dep = cred_info["ADDON_DEP"]
 t = requests.post(
     token_url,
-    auth=(os.environ["CC_EMAIL"], os.environ["CC_PASSWD"])
+    auth=(cred_info["CC_EMAIL"], cred_info["CC_PASSWD"])
 )
 h = {'Authorization': 'cc_auth_token=' + '"' + t.json()['token'] + '"'}
 r = requests.get(
