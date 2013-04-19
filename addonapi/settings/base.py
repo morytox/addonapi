@@ -24,7 +24,9 @@ try:
 
     app = cred_info["ADDON_APP"]
     dep = cred_info["ADDON_DEP"]
-    r = requests.get('http://%s.%s.cloudcontrolled.com/api' % (dep, app))
+    if dep != 'default':
+        r = requests.get('http://%s.%s.cloudcontrolled.com/api' % (dep, app))
+    else r = requests.get('http://%s.cloudcontrolled.com/api' % (app))
     data = {}
     for addon in r.json():
         data[addon['name']] = addon['config_vars']
