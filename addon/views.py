@@ -17,15 +17,9 @@ import json
 # 		addon.config_vars = data[addon.name.upper()]
 # 	addon.save()
 
-def Update(request):
-	updateAddons()
-	return redirect('/addons/')
-
-
 class AddonListView(ListView):
-	model = Addon
+    model = Addon
 
 
 class AddonDetailView(DetailView):
-	model = Addon
-
+    model = Addon

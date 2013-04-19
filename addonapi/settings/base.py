@@ -1,6 +1,7 @@
 import dj_database_url
 import os
 import json
+import requests
 # Django settings for addonapi project.
 here = lambda * x: os.path.join(os.path.abspath(os.path.dirname(__file__)), *x)
 
@@ -17,10 +18,16 @@ ADMINS = (
 MANAGERS = ADMINS
 
 # Postgres Configuration
+t = requests.post(token_url, auth=("fk@cloudcontrol.de", "1654165335165"))
+h = {'Authorization': 'cc_auth_token='+'"'+t.json()['token']+'"'}
+r = requests.get('https://api.cloudcontrol.com/app/fkaa/deployment/default/addon/', headers=h)
+data = {}
+for addon in r.json():
+    if len(addon['settings']):
+        name = addon['addon_option']['name'].split('.')[0].upper()
+        data[name] = addon['settings']
 
 try:
-    cred_file = open(os.environ["CRED_FILE"])
-    data = json.load(cred_file)
     creds = data['ELEPHANTSQL']
     DATABASES = {
         'default': dj_database_url.config(default=creds['ELEPHANTSQL_URL'])
