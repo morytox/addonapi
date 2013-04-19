@@ -16,29 +16,30 @@ ADMINS = (
 )
 
 MANAGERS = ADMINS
-cred_file = open(os.environ["CRED_FILE"])
-conf_creds = json.load(cred_file)
-cred_info = conf_creds['CONFIG']
-# Postgres Configuration
-api = 'https://api.cloudcontrol.com'
-app = cred_info["ADDON_APP"]
-dep = cred_info["ADDON_DEP"]
-t = requests.post(
-    token_url,
-    auth=(cred_info["CC_EMAIL"], cred_info["CC_PASSWD"])
-)
-h = {'Authorization': 'cc_auth_token=' + '"' + t.json()['token'] + '"'}
-r = requests.get(
-    '%s/app/%s/deployment/%s/addon/' % (api, app, dep),
-    headers=h
-)
-data = {}
-for addon in r.json():
-    if len(addon['settings']):
-        name = addon['addon_option']['name'].split('.')[0].upper()
-        data[name] = addon['settings']
 
 try:
+    cred_file = open(os.environ["CRED_FILE"])
+    conf_creds = json.load(cred_file)
+    cred_info = conf_creds['CONFIG']['CONFIG_VARS']
+    # Postgres Configuration
+    api = 'https://api.cloudcontrol.com'
+    app = cred_info["ADDON_APP"]
+    dep = cred_info["ADDON_DEP"]
+    t = requests.post(
+        '%s/token' % api,
+        auth=(cred_info["CC_EMAIL"], cred_info["CC_PASSWD"])
+    )
+    h = {'Authorization': 'cc_auth_token=' + '"' + t.json()['token'] + '"'}
+    r = requests.get(
+        '%s/app/%s/deployment/%s/addon/' % (api, app, dep),
+        headers=h
+    )
+    data = {}
+    for addon in r.json():
+        if len(addon['settings']):
+            name = addon['addon_option']['name'].split('.')[0].upper()
+            data[name] = addon['settings']
+
     creds = data['ELEPHANTSQL']
     DATABASES = {
         'default': dj_database_url.config(default=creds['ELEPHANTSQL_URL'])
