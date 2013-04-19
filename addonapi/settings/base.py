@@ -22,10 +22,17 @@ try:
     conf_creds = json.load(cred_file)
     cred_info = conf_creds['CONFIG']['CONFIG_VARS']
 
-    from pycclib import cclib
-    api = cclib.API()
-    api.create_token(cred_info["CC_EMAIL"], cred_info["CC_PASSWD"])
-    req = api.read_addons(cred_info["ADDON_APP"], cred_info["ADDON_DEP"])
+    app = cred_info["ADDON_APP"]
+    dep = cred_info["ADDON_DEP"]
+    r = requests.get('http://%s.%s.cloudcontrolled.com/api' % (dep, app))
+    data = {}
+    for addon in r.json():
+        data[addon['name']] = addon['config_vars']
+
+    # from pycclib import cclib
+    # api = cclib.API()
+    # api.create_token(cred_info["CC_EMAIL"], cred_info["CC_PASSWD"])
+    # req = api.read_addons(cred_info["ADDON_APP"], cred_info["ADDON_DEP"])
 
     # Using self written Requests
     #
@@ -43,11 +50,13 @@ try:
     # )
     # req = r.json()
 
-    data = {}
-    for addon in req:
-        if len(addon['settings']):
-            name = addon['addon_option']['name'].split('.')[0].upper()
-            data[name] = addon['settings']
+    # Format Settings for CC-Api Output
+
+    # data = {}
+    # for addon in req:
+    #     if len(addon['settings']):
+    #         name = addon['addon_option']['name'].split('.')[0].upper()
+    #         data[name] = addon['settings']
 
     creds = data['ELEPHANTSQL']
     DATABASES = {
