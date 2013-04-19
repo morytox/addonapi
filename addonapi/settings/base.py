@@ -18,9 +18,18 @@ ADMINS = (
 MANAGERS = ADMINS
 
 # Postgres Configuration
-t = requests.post(token_url, auth=("fk@cloudcontrol.de", "1654165335165"))
-h = {'Authorization': 'cc_auth_token='+'"'+t.json()['token']+'"'}
-r = requests.get('https://api.cloudcontrol.com/app/fkaa/deployment/default/addon/', headers=h)
+api = 'https://api.cloudcontrol.com'
+app = os.environ["ADDON_APP"]
+dep = os.environ["ADDON_DEP"]
+t = requests.post(
+    token_url,
+    auth=(os.environ["CC_EMAIL"], os.environ["CC_PASSWD"])
+)
+h = {'Authorization': 'cc_auth_token=' + '"' + t.json()['token'] + '"'}
+r = requests.get(
+    '%s/app/%s/deployment/%s/addon/' % (api, app, dep),
+    headers=h
+)
 data = {}
 for addon in r.json():
     if len(addon['settings']):
